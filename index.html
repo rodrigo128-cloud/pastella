@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pastella Bakehouse | Cookies Clásicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Parkinsans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ---------------------------------------------------------------
+     Mismo mundo oscuro de medianoche, ahora con la paleta Pastella.
+     Los neutros están teñidos hacia el tono de la lavanda (313) en vez
+     del cocoa anterior, con croma bajo cerca de los extremos de
+     luminosidad. Los dos colores de marca van escritos en OKLCH pero
+     vuelven exactos a su hexadecimal oficial, no son aproximaciones:
+       Lavanda Pastella  #CDB4DB   acento único
+       Crema Suave       #FFF1E6   color de texto
+     --------------------------------------------------------------- */
+  :root {
+    --lavanda: oklch(80.37% 0.0605 313.45);
+    --crema:   oklch(96.62% 0.0211 60.75);
+
+    --bg:     oklch(16% 0.012 313);
+    --ink:    var(--crema);
+    --muted:  oklch(96.62% 0.0211 60.75 / 0.62);
+    --accent: var(--lavanda);
+
+    --bg-1: oklch(21% 0.015 313);
+    --line: oklch(32% 0.022 313);
+
+    --font-display: "Fraunces", Georgia, serif;
+    --font-body: "Parkinsans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    --gutter: 7vw;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  img, video { display: block; max-width: 100%; }
+
+  .label {
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .accent-word { color: var(--accent); }
+
+  /* =============================================================
+     HERO  ·  hero.mp4 a sangre, en movimiento antes del primer scroll
+     ============================================================= */
+  .hero {
+    position: relative;
+    height: 100svh;
+    min-height: 560px;
+    overflow: hidden;
+  }
+  .hero video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* Halo suave centrado: el logotipo nunca se lava sobre la imagen.
+     Cubre el hero entero para que no se vea el borde de la capa. */
+  .hero-halo {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(58% 48% at 50% 50%, oklch(13% 0.014 313 / 0.86) 0%, oklch(13% 0.014 313 / 0.48) 52%, oklch(13% 0.014 313 / 0) 82%),
+      linear-gradient(180deg, oklch(14% 0.013 313 / 0.28) 0%, oklch(14% 0.013 313 / 0.30) 55%, oklch(14% 0.013 313 / 0.55) 100%);
+  }
+  .hero-content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(90vw, 940px);
+    text-align: center;
+    text-shadow: 0 1px 24px oklch(13% 0.014 313 / 0.7);
+  }
+  /* El logotipo caligráfico real, no una tipografía cursiva. */
+  .hero-logo {
+    width: clamp(260px, 46vw, 620px);
+    height: auto;
+    margin: 0 auto;
+    filter: drop-shadow(0 2px 30px oklch(13% 0.014 313 / 0.8));
+  }
+  /* El descriptor va debajo del logotipo, como en el lockup oficial. */
+  .hero-descriptor {
+    margin-top: 1.6rem;
+    letter-spacing: 0.44em;
+    text-indent: 0.44em;
+    color: var(--crema);
+  }
+
+  /* =============================================================
+     THESIS
+     ============================================================= */
+  .thesis {
+    padding: 22vh var(--gutter) 16vh;
+  }
+  .thesis-line {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 6.2vw, 4.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    max-width: 17ch;
+  }
+  .lede {
+    color: var(--muted);
+    font-size: clamp(0.98rem, 1.5vw, 1.1rem);
+    max-width: 44ch;
+    margin-top: 2.6rem;
+    margin-left: clamp(0rem, 28vw, 24rem);
+  }
+
+  /* =============================================================
+     FEATURE PAIRS  ·  g1 y g2, proporciones distintas a propósito
+     ============================================================= */
+  .pair {
+    display: grid;
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: center;
+    padding: 12vh var(--gutter);
+  }
+  .pair-a { grid-template-columns: 5fr 7fr; }
+  .pair-b { grid-template-columns: 7fr 5fr; }
+  .pair-b .pair-media { order: 2; }
+
+  .pair figure { margin: 0; }
+  .pair figure img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    background: var(--bg-1);
+  }
+  .pair figcaption {
+    margin-top: 0.9rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .pair h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin-bottom: 1.1rem;
+  }
+  .pair p {
+    color: var(--muted);
+    font-size: clamp(1rem, 1.4vw, 1.08rem);
+    max-width: 38ch;
+  }
+  .pair-a .pair-text { padding-top: 4vh; }
+  .pair-b .pair-text { padding-bottom: 4vh; }
+
+  /* =============================================================
+     BAND  ·  g3 + middle.mp4, a sangre
+     ============================================================= */
+  .band {
+    background: var(--bg-1);
+    padding: 12vh var(--gutter);
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: end;
+  }
+  .band figure { margin: 0; }
+  .band figure img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    background: var(--bg);
+  }
+  .band figcaption {
+    margin-top: 0.9rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .band video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: var(--bg);
+  }
+
+  /* =============================================================
+     ROWS  ·  numeradas, escalonadas
+     ============================================================= */
+  .rows { padding: 16vh var(--gutter); }
+  .row {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: clamp(1rem, 4vw, 3rem);
+    align-items: baseline;
+    padding: 2.6rem 0;
+    border-top: 1px solid var(--line);
+  }
+  .row:last-child { border-bottom: 1px solid var(--line); }
+  .row-num {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    color: var(--accent);
+    line-height: 1;
+  }
+  .row p {
+    font-size: clamp(1.05rem, 1.9vw, 1.45rem);
+    max-width: 30ch;
+  }
+  .row:nth-child(2) { padding-left: clamp(0rem, 6vw, 5rem); }
+  .row:nth-child(3) { padding-left: clamp(0rem, 12vw, 10rem); }
+
+  /* =============================================================
+     CTA
+     ============================================================= */
+  .cta { padding: 4vh var(--gutter) 18vh; }
+  .cta-nota {
+    margin-top: 1.8rem;
+    max-width: 46ch;
+    color: var(--muted);
+    font-size: clamp(0.98rem, 1.5vw, 1.1rem);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+  }
+  .cta-nota a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+  }
+  /* Íconos genéricos de trazo, no los logotipos oficiales de cada plataforma. */
+  .cta svg {
+    flex-shrink: 0;
+    color: var(--accent);
+  }
+  .cta > a svg { width: 0.82em; height: 0.82em; }
+  .cta-nota svg { width: 1.2em; height: 1.2em; margin-top: 0.16em; }
+  .cta > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.8rem, 5vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.35rem;
+    transition: color 0.35s ease;
+  }
+  .cta > a:hover { color: var(--accent); }
+
+  /* =============================================================
+     FOOTER  ·  marquesina a velocidad constante
+     ============================================================= */
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 3.5rem;
+    padding-bottom: 3rem;
+    overflow: hidden;
+  }
+  .marquee {
+    white-space: nowrap;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+  .marquee-track {
+    display: inline-block;
+    animation: marquee 46s linear infinite;
+    will-change: transform;
+  }
+  /* El monograma P, no el nombre escrito en una tipografía prestada. */
+  .marquee-track img {
+    display: inline-block;
+    height: clamp(52px, 8vw, 92px);
+    width: auto;
+    margin: 0 clamp(1.4rem, 3vw, 2.8rem);
+    vertical-align: middle;
+    opacity: 0.5;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .footer-info {
+    padding: 0 var(--gutter);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2.5rem;
+  }
+  /* Sin el monograma el lockup es más ancho y bajo, va con menos alto. */
+  .footer-lockup { height: 54px; width: auto; }
+
+  /* Reveals. El estado oculto depende de .js-anim, que solo sobrevive
+     si GSAP realmente cargó. Sin librerías, el contenido se ve igual. */
+  .js-anim .reveal { opacity: 0; transform: translateY(34px); }
+
+  /* =============================================================
+     RESPONSIVE
+     ============================================================= */
+  @media (max-width: 860px) {
+    :root { --gutter: 8vw; }
+    .pair-a, .pair-b, .band { grid-template-columns: 1fr; }
+    .pair-b .pair-media { order: 0; }
+    .pair-a .pair-text, .pair-b .pair-text { padding: 0; }
+    .lede { margin-left: 0; }
+    .row { grid-template-columns: 3rem 1fr; }
+    .row:nth-child(2), .row:nth-child(3) { padding-left: 0; }
+    .hero-logo { width: min(74vw, 340px); }
+    .hero-descriptor { margin-top: 1.1rem; letter-spacing: 0.34em; text-indent: 0.34em; }
+  }
+</style>
+<script>
+  // Se aplica antes de pintar, así no hay parpadeo. Si las librerías no
+  // llegan, el script del pie lo saca y no queda nada invisible.
+  document.documentElement.classList.add('js-anim');
+  setTimeout(function () { document.documentElement.classList.remove('js-anim'); }, 4000);
+</script>
+</head>
+<body>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <video id="heroVideo" src="assets/hero.mp4" poster="assets/hero-poster.jpg"
+           autoplay loop muted playsinline preload="auto"></video>
+    <div class="hero-halo"></div>
+    <div class="hero-content">
+      <h1><img class="hero-logo" src="assets/logo-pastella.png" alt="Pastella"></h1>
+      <div class="label hero-descriptor">Bakehouse</div>
+    </div>
+  </section>
+
+  <!-- ===================== THESIS ===================== -->
+  <section class="thesis">
+    <p class="thesis-line reveal">Es difícil ver una y no querer probarla.</p>
+    <p class="lede reveal">Las horneamos en el día, siempre frescas. Nada se queda esperando en una vitrina.</p>
+  </section>
+
+  <!-- ===================== FEATURE PAIR 1 · g1 ===================== -->
+  <section class="pair pair-a">
+    <figure class="pair-media reveal">
+      <img src="assets/g1.jpg" alt="Bol de cookies clásicas de Pastella sobre lino oscuro">
+      <figcaption>Recién salidas del <span class="accent-word">horno</span></figcaption>
+    </figure>
+    <div class="pair-text reveal">
+      <h2>60 gramos de felicidad.</h2>
+      <p>Y se nota apenas las levantás. No son galletitas de paquete.</p>
+    </div>
+  </section>
+
+  <!-- ===================== FEATURE PAIR 2 · g2 ===================== -->
+  <section class="pair pair-b">
+    <div class="pair-text reveal">
+      <h2>Las hacemos con amor</h2>
+      <p>En nuestra cocina, el día que las venís a buscar. Sin conservantes ni saborizantes artificiales, porque no tienen que durar semanas.</p>
+    </div>
+    <figure class="pair-media reveal">
+      <img src="assets/g2.jpg" alt="Detalle macro del chocolate de una cookie clásica">
+      <figcaption>Chocolate de <span class="accent-word">verdad</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- ===================== BAND · g3 + middle.mp4 ===================== -->
+  <section class="band">
+    <figure class="reveal">
+      <img src="assets/g3.jpg" alt="Cookies clásicas de 60 gramos en su bol">
+      <figcaption>Así queda una <span class="accent-word">tanda</span></figcaption>
+    </figure>
+    <video class="reveal" src="assets/middle.mp4" autoplay loop muted playsinline preload="metadata"></video>
+  </section>
+
+  <!-- ===================== ROWS ===================== -->
+  <section class="rows">
+    <div class="row reveal">
+      <div class="row-num">01</div>
+      <p>La clásica, 60 gramos. Gs. 8.000.</p>
+    </div>
+    <div class="row reveal">
+      <div class="row-num">02</div>
+      <p>Las mini, 20 gramos. Pack de diez desde Gs. 20.000.</p>
+    </div>
+    <div class="row reveal">
+      <div class="row-num">03</div>
+      <p>Retirás en Lambaré o te lo mandamos. El envío va aparte.</p>
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section class="cta">
+    <a class="reveal" href="https://wa.me/595972136620">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.6 11.6a8 8 0 0 1-11.8 7.1L4 20.2l1.5-4.7a8 8 0 1 1 15.1-3.9Z"></path>
+        <path d="M8.7 11.9h.01"></path><path d="M12.2 11.9h.01"></path><path d="M15.7 11.9h.01"></path>
+      </svg>
+      <span>Pedidos al WhatsApp y lo armamos</span>
+    </a>
+    <p class="cta-nota reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M2.8 9.4a1 1 0 0 1 1-1h2.6l1.5-2.2h8.2l1.5 2.2h2.6a1 1 0 0 1 1 1v8.6a1 1 0 0 1-1 1H3.8a1 1 0 0 1-1-1V9.4Z"></path>
+        <circle cx="12" cy="13.4" r="3.6"></circle>
+      </svg>
+      <span>Seguinos en Instagram <a href="https://instagram.com/pastella.bakehouse">@pastella.bakehouse</a>.</span>
+    </p>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="marquee">
+      <div class="marquee-track"><img src="assets/monograma-p.png" alt=""><img src="assets/monograma-p.png" alt=""><img src="assets/monograma-p.png" alt=""><img src="assets/monograma-p.png" alt=""><img src="assets/monograma-p.png" alt=""><img src="assets/monograma-p.png" alt=""><img src="assets/monograma-p.png" alt=""><img src="assets/monograma-p.png" alt=""><img src="assets/monograma-p.png" alt=""><img src="assets/monograma-p.png" alt=""><img src="assets/monograma-p.png" alt=""><img src="assets/monograma-p.png" alt=""></div>
+    </div>
+    <div class="footer-info">
+      <img class="footer-lockup" src="assets/logo-lockup-crema.png" alt="Pastella Bakehouse">
+      <span class="label">Lambaré, Paraguay</span>
+      <span class="label">0972 136 620</span>
+      <span class="label">Pedidos con 48 horas</span>
+      <span class="label">@pastella.bakehouse</span>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script>
+  (function () {
+    const root = document.documentElement;
+    const mostrarTodo = () => root.classList.remove('js-anim');
+
+    // El hero tiene que estar en movimiento antes del primer scroll.
+    const hero = document.getElementById('heroVideo');
+    const startHero = () => { const p = hero.play(); if (p) p.catch(() => {}); };
+    startHero();
+    hero.addEventListener('loadeddata', startHero);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) startHero(); });
+
+    // Sin GSAP no hay animación posible: se muestra todo y se termina acá.
+    if (!window.gsap || !window.ScrollTrigger) { mostrarTodo(); return; }
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Scroll con inercia. Es opcional: si Lenis no cargó, queda el scroll nativo.
+    if (window.Lenis) {
+      const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    // Reveals
+    document.querySelectorAll('.reveal').forEach((el) => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' },
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
