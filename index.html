@@ -446,8 +446,19 @@
     .vitrina-pieza { flex: 0 0 100%; display: flex; justify-content: center; }
     .vitrina-dato { position: static; font-size: 0.64rem; letter-spacing: 0.18em; }
     .vitrina-dato i { display: none; }
-    .vitrina-mando { flex-wrap: wrap; row-gap: 2.4rem; }
-    .vitrina-tabs { flex: 0 0 100%; order: -1; }
+    /* Cinco nombres no entran: en el teléfono se vuelven marcadores.
+       El nombre del producto ya se lee grande arriba. */
+    .vitrina-mando { gap: 0.6rem; }
+    .vitrina-tabs { gap: 0; }
+    .vitrina-tab { font-size: 0; padding: 0.9rem 0.7rem; }
+    .vitrina-tab span {
+      display: block;
+      width: 7px;
+      height: 7px;
+      padding: 0;
+      border: 1px solid var(--line);
+    }
+    .vitrina-tab[aria-selected="true"] span { background: var(--accent); border-color: var(--accent); }
   }
 
   /* =============================================================
@@ -619,7 +630,7 @@
   <section class="vitrina" aria-roledescription="carrusel" aria-label="Productos de Pastella">
     <div class="vitrina-cab reveal">
       <span class="label">El menú</span>
-      <span class="vitrina-contador"><b id="vContador">01</b> <span>/ 03</span></span>
+      <span class="vitrina-contador"><b id="vContador">01</b> <span>/ 05</span></span>
     </div>
 
     <div class="vitrina-escena reveal" id="vEscena">
@@ -644,9 +655,11 @@
       </button>
 
       <div class="vitrina-tabs" role="tablist" aria-label="Elegir producto">
-        <button class="vitrina-tab" type="button" role="tab" data-i="0" aria-selected="true"><span>Classic Choco Chip</span></button>
-        <button class="vitrina-tab" type="button" role="tab" data-i="1" aria-selected="false"><span>Pistacho</span></button>
-        <button class="vitrina-tab" type="button" role="tab" data-i="2" aria-selected="false"><span>Pastella Brownie</span></button>
+        <button class="vitrina-tab" type="button" role="tab" data-i="0" aria-selected="true" aria-label="Classic Choco Chip"><span>Classic Choco Chip</span></button>
+        <button class="vitrina-tab" type="button" role="tab" data-i="1" aria-selected="false" aria-label="Chocolate Obsession"><span>Chocolate Obsession</span></button>
+        <button class="vitrina-tab" type="button" role="tab" data-i="2" aria-selected="false" aria-label="Red Velvet"><span>Red Velvet</span></button>
+        <button class="vitrina-tab" type="button" role="tab" data-i="3" aria-selected="false" aria-label="Pistacho"><span>Pistacho</span></button>
+        <button class="vitrina-tab" type="button" role="tab" data-i="4" aria-selected="false" aria-label="Pastella Brownie"><span>Pastella Brownie</span></button>
       </div>
 
       <button class="vitrina-flecha" id="vNext" type="button" aria-label="Producto siguiente">
@@ -711,6 +724,22 @@
         desc: 'Masa de vainilla, nueces y chips de chocolate.',
         datos: ['60 gramos', 'Estilo NY', 'Gs. 8.000'],
         pedido: 'Hola, quiero pedir cookies Classic Choco Chip.'
+      },
+      {
+        nombre: 'Chocolate Obsession',
+        foto: 'assets/giro-obsession.webp',
+        alt: 'Cookie Chocolate Obsession de Pastella',
+        desc: 'Masa de cacao con trozos de chocolate semiamargo.',
+        datos: ['60 gramos', 'Estilo NY', 'Gs. 8.000'],
+        pedido: 'Hola, quiero pedir cookies Chocolate Obsession.'
+      },
+      {
+        nombre: 'Red Velvet',
+        foto: 'assets/giro-redvelvet.webp',
+        alt: 'Cookie Red Velvet de Pastella con chips de chocolate blanco',
+        desc: 'Masa red velvet con chips de chocolate blanco.',
+        datos: ['60 gramos', 'Estilo NY', 'Gs. 8.000'],
+        pedido: 'Hola, quiero pedir cookies Red Velvet.'
       },
       {
         nombre: 'Pistacho',
