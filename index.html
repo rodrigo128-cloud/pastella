@@ -254,6 +254,203 @@
   .row:nth-child(3) { padding-left: clamp(0rem, 12vw, 10rem); }
 
   /* =============================================================
+     VITRINA  ·  carrusel de producto
+     El producto gira sobre su eje vertical hasta quedar de canto,
+     ahí se cambia la foto, y termina de girar. Mismo gesto que la
+     referencia, sin esquinas redondeadas ni degradados.
+     ============================================================= */
+  .vitrina {
+    padding: 14vh var(--gutter) 12vh;
+    overflow: hidden;
+  }
+  .vitrina-cab {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1.4rem;
+  }
+  .vitrina-contador {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  .vitrina-contador b { color: var(--accent); font-weight: 400; }
+
+  /* ---- escena ---- */
+  .vitrina-escena {
+    position: relative;
+    height: clamp(380px, 46vw, 520px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5vh;
+  }
+  /* El nombre vive detrás del producto, como en la referencia. */
+  .vitrina-nombre {
+    position: absolute;
+    left: 50%;
+    top: 15%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.4rem, 8.4vw, 7rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    color: var(--ink);
+    opacity: 0.16;
+    pointer-events: none;
+    transition: opacity 0.45s ease;
+  }
+  .vitrina-pieza {
+    position: relative;
+    z-index: 2;
+    animation: flotar 7s ease-in-out infinite alternate;
+    cursor: grab;
+    touch-action: pan-y;
+  }
+  .vitrina-pieza.arrastrando { cursor: grabbing; }
+  .vitrina-giro {
+    transform: rotate(var(--giro, 0deg));
+    will-change: transform;
+  }
+  .vitrina-giro img {
+    display: block;
+    width: clamp(240px, 30vw, 380px);
+    height: auto;
+    transition: opacity 0.22s ease;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .vitrina-giro.cambiando img { opacity: 0; }
+  @keyframes flotar {
+    from { transform: translateY(-9px); }
+    to   { transform: translateY(9px); }
+  }
+
+  /* ---- etiquetas de dato, con guía de 1px hacia el producto ---- */
+  .vitrina-dato {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .vitrina-dato i { display: block; width: clamp(28px, 5vw, 64px); height: 1px; background: var(--accent); }
+  .vitrina-dato.d-1 { left: 17%; top: 22%; }
+  .vitrina-dato.d-2 { right: 17%; top: 46%; flex-direction: row-reverse; }
+  .vitrina-dato.d-3 { left: 23%; bottom: 20%; }
+  .vitrina-dato.d-3 span { color: var(--accent); }
+  .vitrina.lista .vitrina-dato { opacity: 1; }
+
+  /* ---- descripción ---- */
+  .vitrina-desc {
+    text-align: center;
+    max-width: 44ch;
+    margin: 3vh auto 0;
+    color: var(--muted);
+    font-size: clamp(0.98rem, 1.5vw, 1.1rem);
+    transition: opacity 0.35s ease;
+  }
+
+  /* ---- mando ---- */
+  .vitrina-mando {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1rem, 3vw, 2.4rem);
+    margin-top: 5vh;
+  }
+  .vitrina-flecha {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--accent);
+    cursor: pointer;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+  .vitrina-flecha svg { width: 20px; height: 20px; }
+  .vitrina-flecha:hover { border-color: var(--accent); }
+  .vitrina-flecha:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .vitrina-tabs { display: flex; gap: clamp(0.6rem, 2.4vw, 2rem); flex-wrap: wrap; justify-content: center; }
+  .vitrina-tab {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.85rem 0.3rem;
+    transition: color 0.3s ease;
+  }
+  .vitrina-tab span { border-bottom: 1px solid transparent; padding-bottom: 0.3rem; transition: border-color 0.3s ease; }
+  .vitrina-tab[aria-selected="true"] { color: var(--ink); }
+  .vitrina-tab[aria-selected="true"] span { border-bottom-color: var(--accent); }
+  .vitrina-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ---- cierre ---- */
+  .vitrina-cierre { text-align: center; margin-top: 6vh; }
+  .vitrina-pedir {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 0.9rem 0.6rem;
+    margin: -0.9rem -0.6rem;
+    transition: color 0.3s ease;
+  }
+  .vitrina-pedir span { border-bottom: 2px solid var(--accent); padding-bottom: 0.3rem; }
+  .vitrina-pedir:hover { color: var(--accent); }
+  .vitrina-condicion { margin-top: 2.6rem; color: var(--muted); font-size: 0.95rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vitrina-pieza { animation: none; }
+  }
+
+  /* En pantalla chica los datos no pueden flotar sobre el producto:
+     bajan a una fila debajo y se van las guías. */
+  @media (max-width: 700px) {
+    .vitrina-escena {
+      height: auto;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
+      column-gap: 1.3rem;
+      row-gap: 2rem;
+      padding-top: clamp(58px, 15vw, 96px);
+    }
+    .vitrina-nombre { top: 0; transform: translate(-50%, 0); }
+    .vitrina-pieza { flex: 0 0 100%; display: flex; justify-content: center; }
+    .vitrina-dato { position: static; font-size: 0.64rem; letter-spacing: 0.18em; }
+    .vitrina-dato i { display: none; }
+    .vitrina-mando { flex-wrap: wrap; row-gap: 2.4rem; }
+    .vitrina-tabs { flex: 0 0 100%; order: -1; }
+  }
+
+  /* =============================================================
      CTA
      ============================================================= */
   .cta { padding: 4vh var(--gutter) 18vh; }
@@ -418,20 +615,48 @@
   </section>
 
   <!-- ===================== ROWS ===================== -->
-  <section class="rows">
-    <div class="row reveal">
-      <div class="row-num">01</div>
-      <p>La clásica, 60 gramos. Gs. 8.000.</p>
-      <a class="row-pedir" href="https://api.whatsapp.com/send?phone=595972136620&amp;text=Hola%2C%20quiero%20pedir%20cookies%20cl%C3%A1sicas." target="_blank" rel="noopener noreferrer"><span>Pedir</span></a>
+  <!-- ===================== VITRINA (carrusel) ===================== -->
+  <section class="vitrina" aria-roledescription="carrusel" aria-label="Productos de Pastella">
+    <div class="vitrina-cab reveal">
+      <span class="label">El menú</span>
+      <span class="vitrina-contador"><b id="vContador">01</b> <span>/ 03</span></span>
     </div>
-    <div class="row reveal">
-      <div class="row-num">02</div>
-      <p>Las mini, 20 gramos. Pack de diez desde Gs. 20.000.</p>
-      <a class="row-pedir" href="https://api.whatsapp.com/send?phone=595972136620&amp;text=Hola%2C%20quiero%20pedir%20un%20pack%20de%20mini%20cookies." target="_blank" rel="noopener noreferrer"><span>Pedir</span></a>
+
+    <div class="vitrina-escena reveal" id="vEscena">
+      <h2 class="vitrina-nombre" id="vNombre">Classic Choco Chip</h2>
+
+      <div class="vitrina-pieza">
+        <div class="vitrina-giro" id="vGiro">
+          <img id="vFoto" src="assets/giro-clasica.webp" alt="Cookie Classic Choco Chip de Pastella">
+        </div>
+      </div>
+
+      <div class="vitrina-dato d-1" id="vDato1"><i></i><span>60 gramos</span></div>
+      <div class="vitrina-dato d-2" id="vDato2"><i></i><span>Estilo NY</span></div>
+      <div class="vitrina-dato d-3" id="vDato3"><i></i><span>Gs. 8.000</span></div>
     </div>
-    <div class="row reveal">
-      <div class="row-num">03</div>
-      <p>Retirás en Lambaré o te lo mandamos. El envío va aparte.</p>
+
+    <p class="vitrina-desc reveal" id="vDesc">Masa de vainilla, nueces y chips de chocolate.</p>
+
+    <div class="vitrina-mando reveal">
+      <button class="vitrina-flecha" id="vPrev" type="button" aria-label="Producto anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5 8 12l7 7"></path></svg>
+      </button>
+
+      <div class="vitrina-tabs" role="tablist" aria-label="Elegir producto">
+        <button class="vitrina-tab" type="button" role="tab" data-i="0" aria-selected="true"><span>Classic Choco Chip</span></button>
+        <button class="vitrina-tab" type="button" role="tab" data-i="1" aria-selected="false"><span>Pistacho</span></button>
+        <button class="vitrina-tab" type="button" role="tab" data-i="2" aria-selected="false"><span>Pastella Brownie</span></button>
+      </div>
+
+      <button class="vitrina-flecha" id="vNext" type="button" aria-label="Producto siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg>
+      </button>
+    </div>
+
+    <div class="vitrina-cierre reveal">
+      <a class="vitrina-pedir" id="vPedir" href="https://api.whatsapp.com/send?phone=595972136620&amp;text=Hola%2C%20quiero%20pedir%20cookies%20Classic%20Choco%20Chip." target="_blank" rel="noopener noreferrer"><span>Pedir este</span></a>
+      <p class="vitrina-condicion">Retirás en Lambaré o te lo mandamos. El envío va aparte.</p>
     </div>
   </section>
 
@@ -466,6 +691,200 @@
     </div>
   </footer>
 
+  <!-- La vitrina vive fuera del bloque de GSAP: si el CDN falla, el
+       carrusel sigue funcionando. -->
+  <script>
+  /* ---------------------------------------------------------------
+     VITRINA. El producto gira hasta quedar de canto (90°), ahí se
+     cambia la foto sin transición, y termina de girar desde el otro
+     lado. Datos reales del menú Pastella 2026.
+     --------------------------------------------------------------- */
+  (function () {
+    const escena = document.getElementById('vEscena');
+    if (!escena) return;
+
+    const PRODUCTOS = [
+      {
+        nombre: 'Classic Choco Chip',
+        foto: 'assets/giro-clasica.webp',
+        alt: 'Cookie Classic Choco Chip de Pastella',
+        desc: 'Masa de vainilla, nueces y chips de chocolate.',
+        datos: ['60 gramos', 'Estilo NY', 'Gs. 8.000'],
+        pedido: 'Hola, quiero pedir cookies Classic Choco Chip.'
+      },
+      {
+        nombre: 'Pistacho',
+        foto: 'assets/giro-pistacho.webp',
+        alt: 'Cookie premium rellena de pistacho de Pastella',
+        desc: 'Masa con pistachos tostados y chips de chocolate blanco, rellena de ganache de pistacho.',
+        datos: ['120 gramos', 'Premium rellena', 'Gs. 20.000'],
+        pedido: 'Hola, quiero pedir la cookie premium de pistacho.'
+      },
+      {
+        nombre: 'Pastella Brownie',
+        foto: 'assets/giro-brownie.webp',
+        alt: 'Pastella Brownie',
+        desc: 'Brownie intenso de chocolate, húmedo por dentro y con una fina costra crocante.',
+        datos: ['Porción', 'Costra crocante', 'Gs. 15.000'],
+        pedido: 'Hola, quiero pedir un Pastella Brownie.'
+      }
+    ];
+
+    const giro = document.getElementById('vGiro');
+    const foto = document.getElementById('vFoto');
+    const nombre = document.getElementById('vNombre');
+    const desc = document.getElementById('vDesc');
+    const contador = document.getElementById('vContador');
+    const pedir = document.getElementById('vPedir');
+    const datos = [1, 2, 3].map((n) => document.getElementById('vDato' + n));
+    const tabs = [...document.querySelectorAll('.vitrina-tab')];
+    const seccion = escena.closest('.vitrina');
+
+    let actual = 0;
+    let girando = false;
+
+    const enlace = (texto) =>
+      'https://api.whatsapp.com/send?phone=595972136620&text=' + encodeURIComponent(texto);
+
+    function pintar(i) {
+      const p = PRODUCTOS[i];
+      foto.src = p.foto;
+      foto.alt = p.alt;
+      nombre.textContent = p.nombre;
+      desc.textContent = p.desc;
+      contador.textContent = String(i + 1).padStart(2, '0');
+      pedir.href = enlace(p.pedido);
+      datos.forEach((d, n) => { d.querySelector('span').textContent = p.datos[n]; });
+      tabs.forEach((t, n) => t.setAttribute('aria-selected', String(n === i)));
+    }
+
+    /* ---- torno ----
+       El ángulo es una sola variable. En reposo avanza sola, con el dedo
+       o el mouse se empuja, y al cambiar de producto pega una vuelta
+       entera cambiando la foto en mitad del giro. */
+    const quieto = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let angulo = 0;
+    let arrastrando = false;
+    let enPantalla = false;
+    let vuelta = null;
+    const VELOCIDAD = 0.035;   // grados por milisegundo: una vuelta cada 10 s
+
+    let ultimo = performance.now();
+    function latir(ahora) {
+      const dt = Math.min(ahora - ultimo, 48);
+      ultimo = ahora;
+      if (vuelta) {
+        const k = Math.min((ahora - vuelta.t0) / vuelta.ms, 1);
+        const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+        angulo = vuelta.desde + (vuelta.hasta - vuelta.desde) * e;
+        if (!vuelta.pintado && k >= 0.46) {
+          vuelta.pintado = true;
+          pintar(vuelta.destino);
+          actual = vuelta.destino;
+          giro.classList.remove('cambiando');
+          nombre.style.opacity = '';
+          desc.style.opacity = '';
+          seccion.classList.add('lista');
+        }
+        if (k >= 1) { vuelta = null; girando = false; }
+      } else if (!arrastrando && enPantalla && !document.hidden && !quieto.matches) {
+        angulo += VELOCIDAD * dt;
+      }
+      giro.style.setProperty('--giro', (angulo % 360).toFixed(2) + 'deg');
+      requestAnimationFrame(latir);
+    }
+    requestAnimationFrame(latir);
+
+    function ir(i) {
+      i = (i + PRODUCTOS.length) % PRODUCTOS.length;
+      if (girando || i === actual) return;
+      girando = true;
+
+      const adelante = (i > actual) || (actual === PRODUCTOS.length - 1 && i === 0);
+
+      seccion.classList.remove('lista');
+      nombre.style.opacity = '0';
+      desc.style.opacity = '0';
+      giro.classList.add('cambiando');
+
+      if (quieto.matches) {
+        pintar(i); actual = i;
+        giro.classList.remove('cambiando');
+        nombre.style.opacity = ''; desc.style.opacity = '';
+        seccion.classList.add('lista');
+        girando = false;
+        return;
+      }
+
+      vuelta = { desde: angulo, hasta: angulo + (adelante ? 360 : -360),
+                 t0: performance.now(), ms: 880, destino: i, pintado: false };
+    }
+
+    document.getElementById('vPrev').addEventListener('click', () => ir(actual - 1));
+    document.getElementById('vNext').addEventListener('click', () => ir(actual + 1));
+    tabs.forEach((t) => t.addEventListener('click', () => ir(Number(t.dataset.i))));
+
+    // teclado, cuando el carrusel está en pantalla
+    seccion.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); ir(actual - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); ir(actual + 1); }
+    });
+
+    // arrastrar empuja el torno; un tirón largo cambia de producto
+    const pieza = giro.parentElement;
+    let x0 = null, xUlt = null;
+    pieza.addEventListener('pointerdown', (e) => {
+      if (girando) return;
+      x0 = xUlt = e.clientX;
+      arrastrando = true;
+      pieza.classList.add('arrastrando');
+      pieza.setPointerCapture(e.pointerId);
+    });
+    pieza.addEventListener('pointermove', (e) => {
+      if (!arrastrando) return;
+      angulo += (e.clientX - xUlt) * 0.55;
+      xUlt = e.clientX;
+    });
+    const soltar = (e) => {
+      if (!arrastrando) return;
+      arrastrando = false;
+      pieza.classList.remove('arrastrando');
+      if (Math.abs(e.clientX - x0) > 110) ir(actual + (e.clientX - x0 < 0 ? 1 : -1));
+      x0 = xUlt = null;
+    };
+    pieza.addEventListener('pointerup', soltar);
+    pieza.addEventListener('pointercancel', soltar);
+
+    // avance solo: se frena al pasar el mouse, al enfocar y si el
+    // sistema pide menos movimiento
+    let reloj = null;
+    const arrancar = () => {
+      if (reloj || quieto.matches) return;
+      reloj = setInterval(() => { if (!document.hidden) ir(actual + 1); }, 6500);
+    };
+    const frenar = () => { clearInterval(reloj); reloj = null; };
+    seccion.addEventListener('mouseenter', frenar);
+    seccion.addEventListener('mouseleave', arrancar);
+    seccion.addEventListener('focusin', frenar);
+    seccion.addEventListener('focusout', arrancar);
+
+    // arranca solo cuando la sección entra en pantalla
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entradas) => {
+        entradas.forEach((en) => {
+          enPantalla = en.isIntersecting;
+          en.isIntersecting ? arrancar() : frenar();
+        });
+      }, { threshold: 0.35 }).observe(seccion);
+    } else {
+      enPantalla = true;
+      arrancar();
+    }
+
+    seccion.classList.add('lista');
+  })();
+  </script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
@@ -492,6 +911,7 @@
       gsap.ticker.add((time) => { lenis.raf(time * 1000); });
       gsap.ticker.lagSmoothing(0);
     }
+
 
     // Reveals
     document.querySelectorAll('.reveal').forEach((el) => {
